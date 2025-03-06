@@ -52,7 +52,8 @@ app.use((req, res, next) => {
       req.ip
     }`
   );
-  res.send("API got hit", req.url);
+  res.status(200).send("Welcome to the API!"); // Correct usage
+  console.log("API got hit"); // Logging the event correctly
   next(); // Pass to next middleware or route handler
 });
 
