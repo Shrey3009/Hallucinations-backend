@@ -52,7 +52,7 @@ app.use((req, res, next) => {
       req.ip
     }`
   );
-  res.status(200).send("Welcome to the API!"); // Correct usage
+  // res.status(200).send("Welcome to the API!"); // Correct usage
   console.log("API got hit"); // Logging the event correctly
   next(); // Pass to next middleware or route handler
 });
