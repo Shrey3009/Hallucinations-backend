@@ -52,7 +52,7 @@ app.use((req, res, next) => {
       req.ip
     }`
   );
-  res.send("API got hit");
+  res.send("API got hit", req.url);
   next(); // Pass to next middleware or route handler
 });
 
