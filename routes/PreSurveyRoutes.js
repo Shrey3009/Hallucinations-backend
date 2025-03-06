@@ -4,6 +4,7 @@ const router = express.Router();
 
 router.post("/PreSurvey", async (req, res) => {
   try {
+    console.log("PreSurvey got hit", req.body); // Logging the event correctly
     const PreSurvey = new PreSurvey_rec(req.body);
     await PreSurvey.save();
     res.status(201).send(PreSurvey);
