@@ -5,7 +5,7 @@ const PreSurveySchema = new mongoose.Schema({
   age: Number,
   email: { type: String, required: true, unique: true },
   gender: String,
-  address: String,
+  major: String,
 });
 
 const PreSurvey = mongoose.model("PreSurvey", PreSurveySchema);
