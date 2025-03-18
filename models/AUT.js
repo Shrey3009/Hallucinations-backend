@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const UseCaseSchema = new mongoose.Schema({
-  use: { type: String, required: true },
-  explanation: { type: String, required: true },
+  use: { type: String },
+  explanation: { type: String },
 });
 
 const AUTSchema = new mongoose.Schema({
