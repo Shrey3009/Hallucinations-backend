@@ -6,12 +6,11 @@ const PreSurveySchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   gender: String,
   major: String,
-  race: String,
   experience: String,
   activities: String,
   creativity: String,
   familiarity: String,
-  agreeToTerms: false,
+  agreeToTerms: Boolean,
 });
 
 const PreSurvey = mongoose.model("PreSurvey", PreSurveySchema);
