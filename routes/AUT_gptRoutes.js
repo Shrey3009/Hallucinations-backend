@@ -12,6 +12,7 @@ router.post("/AUT_gpt", async (req, res) => {
   }
 
   try {
+    console.log("AUT_GPT got hit", req.body); // Logging the event correctly
     // Create a new AUT document with an array of use cases and the preSurveyId
     const aut = new AUT_gpt_rec({ useCases, preSurveyId });
     await aut.save();
