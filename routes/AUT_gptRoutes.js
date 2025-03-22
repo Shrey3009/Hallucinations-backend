@@ -4,7 +4,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 
 router.post("/AUT_gpt", async (req, res) => {
-  const { useCases, preSurveyId, round, object, temperature } = req.body;
+  const { useCases, preSurveyId, round, object, temperature, task } = req.body;
 
   // Validate preSurveyId
   if (!mongoose.Types.ObjectId.isValid(preSurveyId)) {
@@ -20,6 +20,7 @@ router.post("/AUT_gpt", async (req, res) => {
       round,
       object,
       temperature,
+      task,
     });
     await aut.save();
     res.status(201).send(aut);
