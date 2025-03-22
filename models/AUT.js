@@ -12,6 +12,7 @@ const AUTSchema = new mongoose.Schema({
     ref: "PreSurvey",
     required: true,
   },
+  object: { type: String },
 });
 
 const AUT = mongoose.model("AUT", AUTSchema);

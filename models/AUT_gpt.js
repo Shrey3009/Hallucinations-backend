@@ -13,6 +13,7 @@ const AUTSchema = new mongoose.Schema({
     ref: "PreSurvey",
     required: true,
   },
+  object: { type: String },
 });
 
 const AUT_gpt = mongoose.model("AUT_gpt", AUTSchema);
