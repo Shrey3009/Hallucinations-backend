@@ -14,6 +14,7 @@ const AUTSchema = new mongoose.Schema({
     required: true,
   },
   object: String,
+  temperature: Number,
 });
 
 const AUT_gpt = mongoose.model("AUT_gpt", AUTSchema);
