@@ -1,3 +1,4 @@
+const express = require("express");
 const chatMessages = require("../models/chatMessages"); // Ensure this path is correct
 const router = express.Router();
 const mongoose = require("mongoose");
