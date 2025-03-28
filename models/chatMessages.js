@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
-const chahtSchema = new mongoose.Schema({
-  message: { type: String },
-  direction: { type: String },
-  sender: { type: String },
+const chatSchema = new mongoose.Schema({
+  message: { type: String, required: true },
+  direction: { type: String, enum: ["incoming", "outgoing"], required: true },
+  sender: { type: String, required: true },
 });
 
 const chatMessagesSchema = new mongoose.Schema({
