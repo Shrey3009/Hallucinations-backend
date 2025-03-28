@@ -5,6 +5,7 @@ const PreSurvey = require("./routes/PreSurveyRoutes"); // Adjust the path as nec
 const PostSurvey = require("./routes/PostSurveyRoutes"); // Adjust the path as necessary
 const AUT = require("./routes/AUTRoutes"); // Adjust the path as necessary
 const AUT_gpt = require("./routes/AUT_gptRoutes"); // Adjust the path as necessary
+const chatMessages = require("./routes/chatMessagesRoute"); // Adjust the path as necessary
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -61,6 +62,7 @@ app.use(PreSurvey); // Use the user routes
 app.use(AUT);
 app.use(AUT_gpt);
 app.use(PostSurvey); // Use the user routes
+app.use(chatMessages);
 
 console.log("MONGO_URI : ", process.env.MONGO_URI);
 
