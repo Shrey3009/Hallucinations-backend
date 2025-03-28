@@ -14,32 +14,6 @@ app.use(express.json()); // Middleware to parse JSON bodies
 
 const cors = require("cors");
 
-// CORS configuration
-// This sets up CORS to allow requests from your React application's domain
-// app.use(
-//   cors({
-//     origin: "http://localhost:5173", // Only allow this origin to access the resources
-//   })
-// );
-
-//halucination-survey.netlify.app/
-// const allowedOrigins = [
-//   "http://localhost:5173",
-//   "https://halucination-survey.netlify.app/",
-// ];
-
-// app.use(
-//   cors({
-//     origin: (origin, callback) => {
-//       if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-//         callback(null, true);
-//       } else {
-//         callback(new Error("Not allowed by CORS"));
-//       }
-//     },
-//   })
-// );
-
 app.use(
   cors({
     origin: true, // Allows all domains to access your resources

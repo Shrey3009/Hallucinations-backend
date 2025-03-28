@@ -7,7 +7,7 @@ const chatSchema = new mongoose.Schema({
 });
 
 const chatMessagesSchema = new mongoose.Schema({
-  chatMessages: [chahtSchema], // This defines `useCases` as an array of UseCaseSchema
+  chatMessages: [chatSchema], // This defines `useCases` as an array of UseCaseSchema
   preSurveyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "PreSurvey",
