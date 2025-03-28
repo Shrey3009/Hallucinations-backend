@@ -1,5 +1,5 @@
 const express = require("express");
-const chatMessages = require("../models/chatMessages"); // Ensure this path is correct
+const chatMessagesSchema = require("../models/chatMessages"); // Ensure this path is correct
 const router = express.Router();
 const mongoose = require("mongoose");
 
@@ -13,9 +13,13 @@ router.post("/chatbotmessages", async (req, res) => {
 
   try {
     console.log("chatMessages got hit", req.body); // Logging the event correctly
-    const chatMessages = new chatMessages({ useCases, preSurveyId, object });
-    await chatMessages.save();
-    res.status(201).send(chatMessages);
+    const chatMessagesModel = new chatMessagesSchema({
+      task,
+      chatMessages,
+      preSurveyId,
+    });
+    await chatMessagesModel.save();
+    res.status(201).send(chatMessagesModel);
   } catch (error) {
     console.error("Error saving chatMessages:", error);
     res.status(500).send(error.message);
