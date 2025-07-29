@@ -2,36 +2,15 @@ const mongoose = require("mongoose");
 
 const PreSurveySchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: [true, "Name is required"],
-      trim: true,
-    },
     age: {
-      type: Number,
-      required: [true, "Age is required"],
-      min: [1, "Age must be at least 1"],
-      max: [120, "Age must be less than 120"],
-    },
-    email: {
       type: String,
-      required: [true, "Email is required"],
-      unique: true,
+      required: [true, "Age is required"],
       trim: true,
-      lowercase: true,
-      match: [
-        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
-        "Please enter a valid email",
-      ],
     },
     gender: {
       type: String,
       required: [true, "Gender is required"],
       enum: ["male", "female", "other"],
-    },
-    major: {
-      type: String,
-      required: [true, "Major is required"],
       trim: true,
     },
     race: {
@@ -41,33 +20,33 @@ const PreSurveySchema = new mongoose.Schema(
     },
     experience: {
       type: String,
-      required: [true, "AI experience is required"],
+      required: [true, "Experience is required"],
       enum: ["none", "Beginner", "Intermediate", "Advanced"],
+      trim: true,
     },
-    activities: {
+    designExperience: {
       type: String,
-      required: [true, "Creative activities frequency is required"],
-      enum: ["Never", "Rarely", "Sometimes", "Often"],
+      required: [true, "Design experience is required"],
+      enum: ["None", "Some", "Extensive"],
+      trim: true,
     },
-    creativity: {
+    healthcareFamiliarity: {
       type: String,
-      required: [true, "Creativity rating is required"],
+      required: [true, "Healthcare familiarity is required"],
       enum: ["1", "2", "3", "4", "5"],
+      trim: true,
     },
-    familiarity: {
+    automationFamiliarity: {
       type: String,
-      required: [true, "Familiarity rating is required"],
+      required: [true, "Automation familiarity is required"],
       enum: ["1", "2", "3", "4", "5"],
+      trim: true,
     },
-    agreeToTerms: {
-      type: Boolean,
-      required: [true, "You must agree to the terms and conditions"],
-      validate: {
-        validator: function (v) {
-          return v === true;
-        },
-        message: "You must agree to the terms and conditions",
-      },
+    smartDevicesFamiliarity: {
+      type: String,
+      required: [true, "Smart devices familiarity is required"],
+      enum: ["1", "2", "3", "4", "5"],
+      trim: true,
     },
   },
   {
