@@ -7,6 +7,7 @@ const AUT = require("./routes/AUTRoutes"); // Adjust the path as necessary
 const AUT_gpt = require("./routes/AUT_gptRoutes"); // Adjust the path as necessary
 const chatMessages = require("./routes/chatMessagesRoute"); // Adjust the path as necessary
 const TaskPostSurveyRoutes = require("./routes/TaskPostSurveyRoutes"); // Adjust the path as necessary
+const PatentRoutes = require("./routes/PatentRoutes"); // Patent management routes
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -39,6 +40,7 @@ app.use(AUT_gpt);
 app.use(PostSurvey); // Use the user routes
 app.use(chatMessages);
 app.use("/TaskPostSurvey", TaskPostSurveyRoutes); // Use the task post-survey routes
+app.use("/api", PatentRoutes); // Use the patent routes
 
 console.log("MONGO_URI : ", process.env.MONGO_URI);
 
