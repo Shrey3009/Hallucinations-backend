@@ -9,7 +9,11 @@ const PatentSchema = new mongoose.Schema(
     category: {
       type: String,
       required: [true, "Category is required"],
-      enum: ["Smart Interactive Beverage & Food Containers", "Healthcare", "Automation"],
+      enum: [
+        "Smart Interactive Beverage & Food Containers",
+        "Healthcare",
+        "Automation",
+      ],
       trim: true,
     },
     classifications: {

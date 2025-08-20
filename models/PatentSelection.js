@@ -46,6 +46,9 @@ const PatentSelectionSchema = new mongoose.Schema(
   }
 );
 
-const PatentSelection = mongoose.model("PatentSelection", PatentSelectionSchema);
+const PatentSelection = mongoose.model(
+  "PatentSelection",
+  PatentSelectionSchema
+);
 
 module.exports = PatentSelection;
