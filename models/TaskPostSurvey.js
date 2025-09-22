@@ -6,13 +6,14 @@ const TaskPostSurveySchema = new mongoose.Schema(
     taskNumber: {
       type: Number,
       required: [true, "Task number is required"],
-      enum: [2, 3, 4],
+      enum: [1, 2, 3, 4], // include Task 1 as baseline
     },
-    // AI Suggestion Accuracy (for AI tasks: 2, 4)
+
+    // AI Suggestion Accuracy (for AI tasks: 2, 3, 4)
     aiAccuracy: {
       type: String,
       required: function () {
-        return this.taskNumber === 2 || this.taskNumber === 4;
+        return [2, 3, 4].includes(this.taskNumber);
       },
       enum: [
         "The suggestions were mostly incorrect or irrelevant",
@@ -22,11 +23,12 @@ const TaskPostSurveySchema = new mongoose.Schema(
         "All suggestions were highly logical and well-grounded",
       ],
     },
-    // AI Suggestion Helpfulness (for AI tasks: 2, 4)
+
+    // AI Suggestion Helpfulness (for AI tasks: 2, 3, 4)
     aiHelpfulness: {
       type: String,
       required: function () {
-        return this.taskNumber === 2 || this.taskNumber === 4;
+        return [2, 3, 4].includes(this.taskNumber);
       },
       enum: [
         "Not helpful at all — I didn't use any of the AI suggestions",
@@ -36,11 +38,12 @@ const TaskPostSurveySchema = new mongoose.Schema(
         "Extremely helpful — The AI greatly enhanced my creativity",
       ],
     },
-    // Confidence in ideas (for baseline task: 3)
+
+    // Confidence in ideas (for baseline task: 1)
     confidence: {
       type: String,
       required: function () {
-        return this.taskNumber === 3;
+        return this.taskNumber === 1;
       },
       enum: [
         "Not confident at all — My ideas were basic or unoriginal",
@@ -50,11 +53,12 @@ const TaskPostSurveySchema = new mongoose.Schema(
         "Extremely confident — My ideas were highly creative and groundbreaking",
       ],
     },
-    // Task difficulty (for baseline task: 3)
+
+    // Task difficulty (for baseline task: 1)
     difficulty: {
       type: String,
       required: function () {
-        return this.taskNumber === 3;
+        return this.taskNumber === 1;
       },
       enum: [
         "Very easy — Ideas came to me naturally and quickly",
@@ -64,6 +68,7 @@ const TaskPostSurveySchema = new mongoose.Schema(
         "Very difficult — Struggled significantly to generate ideas",
       ],
     },
+
     // Reference to PreSurvey
     preSurveyId: {
       type: mongoose.Schema.Types.ObjectId,
@@ -71,9 +76,7 @@ const TaskPostSurveySchema = new mongoose.Schema(
       required: true,
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 const TaskPostSurvey = mongoose.model("TaskPostSurvey", TaskPostSurveySchema);

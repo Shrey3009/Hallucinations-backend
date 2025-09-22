@@ -27,19 +27,14 @@ const PatentSelectionSchema = new mongoose.Schema(
       ref: "Patent",
       required: true,
     },
-    // Track categories used to ensure different categories for tasks 2, 3, 4
-    task2Category: {
-      type: String,
-      required: true,
-    },
-    task3Category: {
-      type: String,
-      required: true,
-    },
-    task4Category: {
-      type: String,
-      required: true,
-    },
+
+    task2Category: { type: String, required: true },
+    task3Category: { type: String, required: true },
+    task4Category: { type: String, required: true },
+
+    task2Level: { type: String, enum: ["low", "medium", "high"], required: true },
+    task3Level: { type: String, enum: ["low", "medium", "high"], required: true },
+    task4Level: { type: String, enum: ["low", "medium", "high"], required: true },
   },
   {
     timestamps: true,

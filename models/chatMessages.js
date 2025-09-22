@@ -7,15 +7,23 @@ const chatSchema = new mongoose.Schema({
 });
 
 const chatMessagesSchema = new mongoose.Schema({
-  chatMessages: [chatSchema], // This defines `useCases` as an array of UseCaseSchema
+  chatMessages: [chatSchema],
   preSurveyId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "PreSurvey",
     required: true,
   },
-  task: Number,
+  task: { type: Number, required: true },
+  round: { type: Number, default: null }, // null for Task 1
+  level: {
+    type: String,
+    enum: ["low", "medium", "high"],
+    required: function () {
+      return this.task > 1; // only required for tasks 2–4
+    },
+  },
 });
 
-const chatmessages = mongoose.model("chatmessages", chatMessagesSchema);
+const ChatMessages = mongoose.model("ChatMessages", chatMessagesSchema);
 
-module.exports = chatmessages;
+module.exports = ChatMessages;

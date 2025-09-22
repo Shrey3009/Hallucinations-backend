@@ -38,7 +38,7 @@ app.use(PreSurvey); // Use the user routes
 app.use(AUT);
 app.use(AUT_gpt);
 app.use(PostSurvey); // Use the user routes
-app.use(chatMessages);
+app.use("/api/chatbotmessages",chatMessages);
 app.use("/TaskPostSurvey", TaskPostSurveyRoutes); // Use the task post-survey routes
 app.use("/api", PatentRoutes); // Use the patent routes
 

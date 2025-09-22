@@ -9,11 +9,6 @@ const PatentSchema = new mongoose.Schema(
     category: {
       type: String,
       required: [true, "Category is required"],
-      enum: [
-        "Smart Interactive Beverage & Food Containers",
-        "Healthcare",
-        "Automation",
-      ],
       trim: true,
     },
     classifications: {
@@ -31,9 +26,9 @@ const PatentSchema = new mongoose.Schema(
       required: [true, "Patent link is required"],
       trim: true,
     },
-    abstract: {
+    patentDescription: {
       type: String,
-      required: [true, "Abstract is required"],
+      required: [true, "Patent description is required"],
       trim: true,
     },
     status: {
@@ -49,14 +44,17 @@ const PatentSchema = new mongoose.Schema(
     lowHallucinationExample: {
       type: String,
       trim: true,
+      default: "",
     },
     mediumHallucinationExample: {
       type: String,
       trim: true,
+      default: "",
     },
     highHallucinationExample: {
       type: String,
       trim: true,
+      default: "",
     },
   },
   {

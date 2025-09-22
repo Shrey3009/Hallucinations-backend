@@ -31,20 +31,20 @@ router.post("/", async (req, res) => {
       });
     }
 
-    const isAITask = taskNumber === 2 || taskNumber === 4;
-    const isBaselineTask = taskNumber === 3;
+   const isAITask = [2, 3, 4].includes(taskNumber);
+   const isBaselineTask = taskNumber === 1;
 
     if (isAITask && (!accuracy || !helpfulness)) {
-      return res.status(400).json({
-        error: "For AI tasks (2, 4), accuracy and helpfulness are required",
-      });
-    }
+  return res.status(400).json({
+    error: "For AI tasks (2, 3, 4), accuracy and helpfulness are required",
+  });
+}
 
     if (isBaselineTask && (!confidence || !difficulty)) {
-      return res.status(400).json({
-        error: "For baseline task (3), confidence and difficulty are required",
-      });
-    }
+  return res.status(400).json({
+    error: "For baseline task (1), confidence and difficulty are required",
+  });
+}
 
     // Map frontend values to backend enum values
     const accuracyMap = {
