@@ -1,57 +1,57 @@
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const PreSurvey = require("./routes/PreSurveyRoutes"); // Adjust the path as necessary
-const PostSurvey = require("./routes/PostSurveyRoutes"); // Adjust the path as necessary
-const AUT = require("./routes/AUTRoutes"); // Adjust the path as necessary
-const AUT_gpt = require("./routes/AUT_gptRoutes"); // Adjust the path as necessary
-const chatMessages = require("./routes/chatMessagesRoute"); // Adjust the path as necessary
-const TaskPostSurveyRoutes = require("./routes/TaskPostSurveyRoutes"); // Adjust the path as necessary
-const PatentRoutes = require("./routes/PatentRoutes"); // Patent management routes
+
+const PreSurvey = require("./routes/PreSurveyRoutes");
+const PostSurvey = require("./routes/PostSurveyRoutes");
+const AUT = require("./routes/AUTRoutes");
+const AUT_gpt = require("./routes/AUT_gptRoutes");
+const chatMessages = require("./routes/chatMessagesRoute");
+const TaskPostSurveyRoutes = require("./routes/TaskPostSurveyRoutes");
+const PatentRoutes = require("./routes/PatentRoutes");
+const openaiRoute = require("./routes/OpenAiRoute");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
 
-app.use(express.json()); // Middleware to parse JSON bodies
-
+// Middleware
+app.use(express.json());
 const cors = require("cors");
+app.use(cors({ origin: true }));
 
-app.use(
-  cors({
-    origin: true, // Allows all domains to access your resources
-  })
-);
-
-// Middleware to log requests
+// Logging
 app.use((req, res, next) => {
   console.log(
-    `${new Date().toISOString()} - ${req.method} request to ${req.url} from ${
-      req.ip
-    }`
+    `${new Date().toISOString()} - ${req.method} request to ${req.url} from ${req.ip}`
   );
-  // res.status(200).send("Welcome to the API!"); // Correct usage
-  console.log("API got hit"); // Logging the event correctly
-  next(); // Pass to next middleware or route handler
+  next();
 });
 
-app.use(PreSurvey); // Use the user routes
-app.use(AUT);
-app.use(AUT_gpt);
-app.use(PostSurvey); // Use the user routes
-app.use("/api/chatbotmessages",chatMessages);
-app.use("/TaskPostSurvey", TaskPostSurveyRoutes); // Use the task post-survey routes
-app.use("/api", PatentRoutes); // Use the patent routes
+// Routes
+app.use("/api", PreSurvey);
+app.use("/api", AUT);
+app.use("/api", AUT_gpt);
+app.use("/api", PostSurvey);
+app.use("/api/chatbotmessages", chatMessages);
+app.use("/api", TaskPostSurveyRoutes);
+app.use("/api", PatentRoutes);
+app.use("/api", openaiRoute);
 
-console.log("MONGO_URI : ", process.env.MONGO_URI);
+console.log("MONGO_URI:", process.env.MONGO_URI);
 
+// Connect to DB
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
+  .catch((err) => console.error(err));
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Export for Vercel
+module.exports = app;
+
+// Start server (if running locally)
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
