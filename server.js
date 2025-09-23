@@ -55,7 +55,7 @@ app.use("/api", AUT);
 app.use("/api", AUT_gpt);
 app.use("/api", PostSurvey);
 app.use("/api/chatbotmessages", chatMessages);
-app.use("/api", TaskPostSurveyRoutes);
+app.use("/api/TaskPostSurvey", TaskPostSurveyRoutes);
 app.use("/api", PatentRoutes);
 app.use("/api", openaiRoute);
 
