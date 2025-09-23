@@ -38,15 +38,6 @@ app.use(async (req, res, next) => {
   }
 });
 
-// Routes
-app.use("/api", PreSurvey);
-app.use("/api", AUT);
-app.use("/api", AUT_gpt);
-app.use("/api", PostSurvey);
-app.use("/api/chatbotmessages", chatMessages);
-app.use("/api", TaskPostSurveyRoutes);
-app.use("/api", PatentRoutes);
-app.use("/api", openaiRoute);
 
 // Debug route: test DB connection manually
 app.get("/api/dbcheck", async (req, res) => {
@@ -57,6 +48,17 @@ app.get("/api/dbcheck", async (req, res) => {
     res.status(500).json({ status: "error", message: err.message });
   }
 });
+
+// Routes
+app.use("/api", PreSurvey);
+app.use("/api", AUT);
+app.use("/api", AUT_gpt);
+app.use("/api", PostSurvey);
+app.use("/api/chatbotmessages", chatMessages);
+app.use("/api", TaskPostSurveyRoutes);
+app.use("/api", PatentRoutes);
+app.use("/api", openaiRoute);
+
 
 // Export for Vercel
 module.exports = app;
