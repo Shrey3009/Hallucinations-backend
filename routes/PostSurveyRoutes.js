@@ -5,9 +5,9 @@ const mongoose = require("mongoose");
 
 router.post("/PostSurvey", async (req, res) => {
   try {
-    console.log("PostSurvey submission received:", req.body);
+    console.log("✅ PostSurvey submission received:", req.body);
 
-    // Validate preSurveyId
+    // Validate preSurveyId format
     if (!mongoose.Types.ObjectId.isValid(req.body.preSurveyId)) {
       return res.status(400).json({
         success: false,
@@ -15,12 +15,16 @@ router.post("/PostSurvey", async (req, res) => {
       });
     }
 
-    // Create a new PostSurvey document
-    const postSurvey = new PostSurvey_rec(req.body);
+    // Explicitly cast preSurveyId to ObjectId
+    const postSurvey = new PostSurvey_rec({
+      ...req.body,
+      preSurveyId: new mongoose.Types.ObjectId(req.body.preSurveyId),
+    });
 
-    // Validate the document
+    // Run sync validation before saving
     const validationError = postSurvey.validateSync();
     if (validationError) {
+      console.error("❌ Validation details (sync):", validationError.errors);
       const errors = Object.values(validationError.errors).map(
         (err) => err.message
       );
@@ -31,7 +35,7 @@ router.post("/PostSurvey", async (req, res) => {
       });
     }
 
-    // Save the document
+    // Save the document (async validation also runs here)
     await postSurvey.save();
 
     res.status(201).json({
@@ -40,9 +44,10 @@ router.post("/PostSurvey", async (req, res) => {
       _id: postSurvey._id,
     });
   } catch (error) {
-    console.error("Error in PostSurvey submission:", error);
+    console.error("❌ Error in PostSurvey submission:", error);
 
     if (error.name === "ValidationError") {
+      console.error("❌ Validation details (catch):", error.errors);
       const errors = Object.values(error.errors).map((err) => err.message);
       return res.status(400).json({
         success: false,

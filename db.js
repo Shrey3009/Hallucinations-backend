@@ -8,9 +8,16 @@ if (!cached) {
 }
 
 async function connectDB() {
-  if (cached.conn) return cached.conn;
+  if (cached.conn) {
+    return cached.conn;
+  }
+
   if (!cached.promise) {
-    console.log("Connecting to MongoDB URI:", process.env.MONGO_URI ? "defined" : "MISSING!");
+    console.log(
+      "Connecting to MongoDB URI:",
+      process.env.MONGO_URI ? "defined" : "MISSING!"
+    );
+
     cached.promise = mongoose
       .connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
@@ -22,10 +29,11 @@ async function connectDB() {
         return mongoose;
       })
       .catch((err) => {
-        console.error("❌ MongoDB connection error:", err);
+        console.error("❌ MongoDB connection error:", err.message);
         throw err;
       });
   }
+
   cached.conn = await cached.promise;
   return cached.conn;
 }
