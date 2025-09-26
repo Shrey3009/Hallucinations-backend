@@ -33,7 +33,7 @@ app.use("/api/chatbotmessages", chatMessages);
 app.use("/api", PatentRoutes);
 app.use("/api", openaiRoute);
 
-// Health check (no reconnect, just checks cached status)
+// Health check
 app.get("/api/dbcheck", (req, res) => {
   if (global.mongoose?.conn) {
     res.json({ status: "ok", message: "MongoDB already connected" });
@@ -45,18 +45,18 @@ app.get("/api/dbcheck", (req, res) => {
 // Export for Vercel
 module.exports = app;
 
-// Local dev only
-if (require.main === module) {
-  const PORT = process.env.PORT || 5000;
-
-  connectDB()
-    .then(() => {
+// Always connect to DB (both local + Vercel)
+connectDB()
+  .then(() => {
+    if (require.main === module) {
+      // Local only: start listening
+      const PORT = process.env.PORT || 5000;
       app.listen(PORT, () =>
         console.log(`✅ Server running locally at http://localhost:${PORT}`)
       );
-    })
-    .catch((err) => {
-      console.error("❌ Failed to connect to MongoDB:", err.message);
-      process.exit(1);
-    });
-}
+    }
+  })
+  .catch((err) => {
+    console.error("❌ Failed to connect to MongoDB:", err.message);
+    process.exit(1);
+  });
