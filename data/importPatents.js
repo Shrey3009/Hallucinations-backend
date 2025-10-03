@@ -11,7 +11,7 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // 2. Load Excel file
-const workbook = XLSX.readFile("Patent_Data.xlsx"); 
+const workbook = XLSX.readFile("Patent_Data_Updated.xlsx"); 
 const sheet = workbook.Sheets["Simplified Version"]; // new sheet name
 const rows = XLSX.utils.sheet_to_json(sheet);
 
