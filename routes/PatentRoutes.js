@@ -82,11 +82,11 @@ router.post("/patent-assignment", async (req, res) => {
       });
     }
 
-    // Task 1: Random patent
+    // ---- Task 1: Random patent from any category ----
     const task1Patent =
       allPatents[Math.floor(Math.random() * allPatents.length)];
 
-    // Tasks 2–4: Random patents from categories
+    // ---- Tasks 2–4: Random patents from unique categories ----
     const categories = [
       "Smart Interactive Beverage & Food Containers",
       "Healthcare",
@@ -96,21 +96,25 @@ router.post("/patent-assignment", async (req, res) => {
 
     const [task2Category, task3Category, task4Category] = shuffledCategories;
 
-    const task2Patent = allPatents.find(
-      (p) =>
-        p.category === task2Category &&
-        p._id.toString() !== task1Patent._id.toString()
-    );
-    const task3Patent = allPatents.find(
-      (p) =>
-        p.category === task3Category &&
-        p._id.toString() !== task1Patent._id.toString()
-    );
-    const task4Patent = allPatents.find(
-      (p) =>
-        p.category === task4Category &&
-        p._id.toString() !== task1Patent._id.toString()
-    );
+    // helper: pick a random patent from a category, excluding certain IDs
+    function getRandomPatentFromCategory(category, excludeIds = []) {
+      const candidates = allPatents.filter(
+        (p) =>
+          p.category === category && !excludeIds.includes(p._id.toString())
+      );
+      if (candidates.length === 0) return null;
+      return candidates[Math.floor(Math.random() * candidates.length)];
+    }
+
+    const task2Patent = getRandomPatentFromCategory(task2Category, [
+      task1Patent._id.toString(),
+    ]);
+    const task3Patent = getRandomPatentFromCategory(task3Category, [
+      task1Patent._id.toString(),
+    ]);
+    const task4Patent = getRandomPatentFromCategory(task4Category, [
+      task1Patent._id.toString(),
+    ]);
 
     if (!task2Patent || !task3Patent || !task4Patent) {
       return res.status(400).json({
@@ -119,7 +123,7 @@ router.post("/patent-assignment", async (req, res) => {
       });
     }
 
-    // Randomize levels for tasks 2–4 using Fisher-Yates shuffle
+    // ---- Randomize levels for tasks 2–4 ----
     function shuffleArray(array) {
       const newArr = [...array];
       for (let i = newArr.length - 1; i > 0; i--) {
@@ -132,7 +136,7 @@ router.post("/patent-assignment", async (req, res) => {
     const shuffledLevels = shuffleArray(["low", "medium", "high"]);
     const [task2Level, task3Level, task4Level] = shuffledLevels;
 
-    // Save assignment
+    // ---- Save assignment ----
     const patentSelection = new PatentSelection({
       preSurveyId,
       task1Patent: task1Patent._id,
